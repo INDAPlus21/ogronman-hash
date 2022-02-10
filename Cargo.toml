@@ -9,3 +9,12 @@ edition = "2018"
 clap = { version = "3.0", features = ["derive"] }
 csv = "1.1"
 serde = { version = "1", features = ["derive"] }
+serde_json = "1.0"
+
+[[bin]]
+name = "DatabaseThing"
+path = "src/main.rs"
+
+[lib]
+name = "hashlib"
+path = "src/hashlib/src/lib.rs"

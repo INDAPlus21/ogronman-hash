@@ -79,21 +79,26 @@ impl <Key, Value> HashTableMapThing<Key, Value>
     }
 
     //Blir väldigt oeffektiv när hashtablemapthing blir väldigt stor men borde fungera för miiiig ;)
-    pub fn print(&self){
+    pub fn print(&self) -> Vec<&Value>{
+        let mut ret_vec = vec![];
         for c in &self.cells {
-            if c.taken == true {    
-                println!("{:#?}", c.value);
+            if c.taken == true {   
+                ret_vec.push(&c.value);
             }
         }
+        return ret_vec;
     }
 
     pub fn delete(&mut self, key: Key){
 
 
         let mut index = key.hash() % self.cells.len();
-
+        let first = index;
         while self.cells[index].key != key {
             index = (index + 1) % self.cells.len();
+            if index == first {
+                break;
+            }
         }
 
         self.cells[index] = HashNode::<_,_>::default();
@@ -125,7 +130,7 @@ impl <Key, Value> HashTableMapThing<Key, Value>
 
         let mut index = key.hash() % self.cells.len();
         let first = index;
-        while self.cells[index].taken{      //I know its kinda ugly but it works, and if i did not have to print to file then it would be easier
+        while self.cells[index].taken{      //I know its kinda ugly but it works, and if i did not have to print to file then it would be fine
             if &self.cells[index].key == key {
                 return true;
             }
